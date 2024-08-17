@@ -7,4 +7,4 @@ define('APPROOT', dirname(dirname(__FILE__)));
 define('URLROOT', 'http://localhost/traversy_mvc');
 
 // Site name
-define('SITENMAE', 'PHPMVC');
+define('SITENAME', 'PHPMVC');
