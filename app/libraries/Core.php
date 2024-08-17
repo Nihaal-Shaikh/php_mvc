@@ -18,7 +18,7 @@ class Core {
         $url = $this->getUrl();
 
         // Look in controllers for first value
-        if (file_exists('../app/controller/' . ucwords($url[0]) . 'php')) {
+        if (file_exists('../app/controller/' . ucwords($url[0]) . '.php')) {
 
             // If exists, then set as controller.
             $this->currentController = ucwords($url[0]);
@@ -27,11 +27,28 @@ class Core {
             unset($url[0]);
         }
 
-        // Require the controller
+        // Require the controller.
         require_once '../app/controller/' . $this->currentController . '.php';
 
-        // Instantiate the controller class
+        // Instantiate the controller class.
         $this->currentController = new $this->currentController;
+
+        // Check for 2nd part of url.
+        if (isset($url[1])) {
+            // Check to see if method exists in controller.
+            if (method_exists($this->currentController, $url[1])) {
+                $this->currentMethod = $url[1];
+            }
+
+            // Unset 1 index
+            unset($url[1]);
+        }
+
+        // Get params.
+        $this->params = $url ? array_values($url) : [];
+
+        // Call a callback with array of params
+        call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
     }
 
     public function getUrl() {

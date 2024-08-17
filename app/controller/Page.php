@@ -3,6 +3,13 @@
 class Page {
 
     public function __construct() {
-        echo "loaded";
+    }
+
+    public function index() {
+        
+    }
+
+    public function about($id) {
+        echo $id;
     }
 }
